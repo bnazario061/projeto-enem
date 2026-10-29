@@ -333,6 +333,6 @@ A pasta `dados/` não está no repositório: o arquivo original tem cerca de 1,5
 
 ## Autor
 
-**[Seu nome]**
+**[Bruno Henrique Nazário Sousa]**
 [LinkedIn](https://www.linkedin.com/in/bruno-henrique-naz%C3%A1rio-sousa-0a4b07425/)
 [GitHub](https://github.com/bnazario061)
