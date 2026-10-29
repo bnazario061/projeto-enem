@@ -1,0 +1,4 @@
+dados/
+*.pbix
+__pycache__/
+colunas_2022.txt
