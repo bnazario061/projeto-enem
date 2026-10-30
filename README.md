@@ -2,7 +2,7 @@
 
 Análise dos microdados do ENEM 2022 com **Python** (tratamento) e **Power BI** (modelagem e dashboard). O projeto investiga como a nota média dos candidatos se relaciona com renda familiar, região, cor/raça, situação de conclusão do ensino médio e faixa etária, e como o comparecimento à prova varia entre as unidades da federação.
 
-![Perfil e desempenho](imagens/01_perfil_desempenho.png)
+![Painel do ENEM 2022](imagens/painel.png)
 
 ---
 
@@ -217,6 +217,12 @@ Candidatos (texto) = FORMAT([Candidatos], "#,##0")
 Taxa de Presença = DIVIDE(SUM(fPresencaUF[PRESENTES]), SUM(fPresencaUF[INSCRITOS]))
 
 Taxa Brasil = CALCULATE([Taxa de Presença], ALL(dUF))
+
+Total Inscritos = SUM(fPresencaUF[INSCRITOS])
+
+Inscritos (texto) = FORMAT([Total Inscritos], "#,##0")
+
+Nota Média Redação = AVERAGE(fEnem[NU_NOTA_REDACAO])
 ```
 
 | Medida | Observação |
@@ -227,28 +233,25 @@ Taxa Brasil = CALCULATE([Taxa de Presença], ALL(dUF))
 | `Candidatos (texto)` | Exibe o número exato no cartão (1.925.479), sem a abreviação automática ("2 Mi"). Serve só para exibição. |
 | `Taxa de Presença` | Soma presentes e inscritos no contexto do visual e depois divide. `DIVIDE` devolve vazio em vez de erro se o divisor for zero. |
 | `Taxa Brasil` | `ALL(dUF)` remove os filtros de UF; em qualquer barra, a medida devolve a taxa nacional. Usada como linha de referência no gráfico de comparecimento. A "linha média" pronta do Power BI não foi usada porque calcularia a média simples das 27 taxas. |
+| `Total Inscritos` | Soma dos inscritos no contexto do visual. Chama-se "Total Inscritos" porque o DAX não diferencia maiúsculas de minúsculas, e o nome "Inscritos" já pertence a uma coluna da mesma tabela. |
+| `Inscritos (texto)` | Mesmo recurso da `Candidatos (texto)`: exibe o número exato no cartão. |
+| `Nota Média Redação` | Média da nota de redação, exibida num dos cartões do painel. |
 
 ---
 
 ## Dashboard
 
-O dashboard tem quatro páginas, do panorama geral para os cruzamentos e, por fim, para quem não fez a prova. Os títulos dos visuais enunciam o achado; os subtítulos trazem as definições.
+O painel principal reúne, numa página só, os indicadores e os cruzamentos das cinco perguntas.
 
-**1. Perfil e desempenho:** totais, renda, situação de conclusão e faixa etária.
+![Painel do ENEM 2022](imagens/painel.png)
 
-![Perfil e desempenho](imagens/01_perfil_desempenho.png)
+- **Cartões:** inscritos, taxa de presença, candidatos, nota média e nota média da redação.
+- **Barra lateral:** filtros por situação de conclusão e por faixa etária, com botão para limpar os filtros. Os filtros não alteram inscritos e presença, que só existem por UF.
+- **Matriz:** nota média por região e faixa de renda.
+- **Gráfico de linhas:** nota média por faixa de renda, com uma linha por cor/raça.
+- **Tabela:** inscritos, taxa de presença e nota média por UF, ordenada pelo comparecimento.
 
-**2. Renda e região:** a relação entre renda e nota em cada região.
-
-![Renda e região](imagens/02_renda_regiao.png)
-
-**3. Cor/raça e renda:** diferenças por cor/raça dentro de cada faixa de renda.
-
-![Cor/raça e renda](imagens/03_cor_raca_renda.png)
-
-**4. Comparecimento:** taxa de presença por UF, com a média nacional como referência.
-
-![Comparecimento](imagens/04_comparecimento.png)
+O arquivo do Power BI inclui também quatro páginas de detalhe (Perfil e desempenho, Renda e região, Cor/raça e renda, Comparecimento), com os gráficos individuais de cada pergunta.
 
 Escolhas de visualização:
 
@@ -313,7 +316,7 @@ projeto-enem/
 ├── scripts/           # 01 a 06, na ordem de execução
 ├── powerbi/
 │   └── dashboard_enem.pbit
-├── imagens/           # prints das páginas do dashboard
+├── imagens/           # print do painel
 └── dados/             # não versionado: microdados e dados tratados
 ```
 
@@ -333,6 +336,5 @@ A pasta `dados/` não está no repositório: o arquivo original tem cerca de 1,5
 
 ## Autor
 
-**[Bruno Henrique Nazário Sousa]**
-[LinkedIn](https://www.linkedin.com/in/bruno-henrique-naz%C3%A1rio-sousa-0a4b07425/)
-[GitHub](https://github.com/bnazario061)
+**Bruno Henrique Nazário Sousa**
+[LinkedIn](https://www.linkedin.com/in/bruno-henrique-naz%C3%A1rio-sousa-0a4b07425/) · [GitHub](https://github.com/bnazario061)
